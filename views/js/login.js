@@ -1,63 +1,61 @@
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+  if (!validateLoginForm(e)) {
+      return;
+  }
+
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
   try {
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
+      const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+          const successBox = document.getElementById('loginSuccessBox');
+          successBox.textContent = 'Login successful';
+          successBox.style.display = 'block';
 
-    const data = await response.json();
-    if (response.ok) {
-      alert('Login successful');
-      window.location.href = data.role === 'admin' ? '/admin' : '/';
-    } else {
-      alert(data.message);
-    }
+          setTimeout(() => {
+              window.location.href = data.role === 'admin' ? '/admin' : '/';
+          }, 2000); // Redirige después de 2 segundos
+      } else {
+          const alertBox = document.getElementById('loginAlertBox');
+          alertBox.textContent = data.message || 'Ocurrió un error desconocido.';
+          alertBox.style.display = 'block';
+      }
   } catch (error) {
-    console.error('Error:', error);
-    alert('An error occurred. Please try again.');
+      console.error('Error:', error);
+      const alertBox = document.getElementById('loginAlertBox');
+      alertBox.textContent = 'Ocurrió un error. Por favor, intenta nuevamente.';
+      alertBox.style.display = 'block';
   }
 });
 
 // Inicializa ScrollReveal
-ScrollReveal().reveal('.container', {
+ScrollReveal().reveal('.container.glass', {
   origin: 'bottom',
   distance: '50px',
   duration: 1000,
   delay: 200,
   easing: 'ease-in-out'
 });
-
-// Añadir ScrollReveal al reCAPTCHA
-ScrollReveal().reveal('.g-recaptcha-container', {
-  origin: 'bottom',
-  distance: '50px',
-  duration: 1000,
-  delay: 400,
-  easing: 'ease-in-out'
-});
-
-// Puedes agregar más elementos para que se revelen, si lo deseas.
 ScrollReveal().reveal('.top-header', {
   origin: 'top',
   distance: '30px',
   duration: 800,
   delay: 300
 });
-
 ScrollReveal().reveal('.input-field', {
   origin: 'left',
   distance: '30px',
   duration: 800,
   interval: 200 // Diferencia de tiempo entre cada elemento
 });
- 
 ScrollReveal().reveal('.bottom', {
   origin: 'bottom',
   distance: '30px',

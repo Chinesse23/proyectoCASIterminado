@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <link rel="stylesheet" type="text/css" href="boxicons/css/boxicons.css">
+    <link rel="icon" href="/assets/favicon-login.ico" type="image/x-icon">
     <title>Choroni login</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -16,6 +17,8 @@
                 <span>Posada choroni</span>
                 <header>Iniciar Sesión</header>
             </div>
+            <div class="login-alert-box" id="loginAlertBox" style="display: none;"></div>
+            <div class="login-alert-box success" id="loginSuccessBox" style="display: none;"></div>
             <form id="loginForm">
                 <div class="input-field">
                     <input type="text" class="input" id="username" name="username" placeholder="Usuario" required>
@@ -44,6 +47,5 @@
     </div>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/js/login.js"></script>
-    <script src="/js/validateForms.js"></script>
+    <script src="/js/validateLoginForms.js"></script>
 </body>
-</html>

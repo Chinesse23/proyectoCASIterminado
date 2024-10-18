@@ -1,5 +1,10 @@
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    if (!validateForm(e, 'register')) {
+        return;
+    }
+
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -16,14 +21,23 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         });
         const data = await response.json();
         if (response.ok) {
-            alert('Registration successful');
-            window.location.href = window.location.origin + '/api/auth/login';
+            const successBox = document.getElementById('successBox');
+            successBox.textContent = 'Registro exitoso';
+            successBox.style.display = 'block';
+
+            setTimeout(() => {
+                window.location.href = window.location.origin + '/api/auth/login';
+            }, 2000); // Redirige después de 2 segundos
         } else {
-            alert(data.message);
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = data.message || 'Ocurrió un error desconocido.';
+            alertBox.style.display = 'block';
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        const alertBox = document.getElementById('alertBox');
+        alertBox.textContent = 'Ocurrió un error. Por favor, intenta nuevamente.';
+        alertBox.style.display = 'block';
     }
 });
 

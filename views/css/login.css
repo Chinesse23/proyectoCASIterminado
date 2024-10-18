@@ -159,3 +159,41 @@ label a{
     width: 400px; /* Ajustamos el ancho al 100% */
     max-width: 100%; /* Aseguramos que no se salga del contenedor */
 }
+
+/* Estilos para el cuadro de alerta */
+.alert-box {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #FF0000;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #FF0000;
+    border-radius: 5px;
+    display: none;
+    text-align: center;
+    font-size: 14px;
+}
+
+.alert-box.success {
+    background-color: rgba(0, 255, 0, 0.1);
+    color: #00FF00;
+    border-color: #00FF00;
+}
+
+/* Estilos para el cuadro de alerta en el login */
+.login-alert-box {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #FF0000;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #FF0000;
+    border-radius: 5px;
+    display: none;
+    text-align: center;
+    font-size: 14px;
+}
+
+.login-alert-box.success {
+    background-color: rgba(0, 255, 0, 0.1);
+    color: #00FF00;
+    border-color: #00FF00;
+}

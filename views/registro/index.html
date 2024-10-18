@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/login.css"> <!-- Usa el CSS de login para los estilos cristalizados -->
     <link rel="stylesheet" href="css/boxicons/css/boxicons.css">
+    <link rel="icon" href="/assets/favicon-login.ico" type="image/x-icon">
     <title>Choroni registro</title>
 </head>
 <body>
@@ -15,6 +16,8 @@
                 <span>Posada Choroni</span>
                 <header>Crear Cuenta</header>
             </div>
+            <div class="alert-box" id="alertBox" style="display: none;"></div>
+            <div class="alert-box success" id="successBox" style="display: none;"></div>
             <form id="registerForm" onsubmit="return validateForm(event, 'register')">
                 <div class="input-field">
                     <input type="text" class="input" id="username" name="username" placeholder="Usuario" required>
