@@ -3,7 +3,123 @@ document.addEventListener('DOMContentLoaded', () => {
     loadActividades();
     loadVentas();
     loadVentasChart();
+
+    // Apply ScrollReveal
+    ScrollReveal().reveal('.content section', {
+        origin: 'bottom',
+        distance: '50px',
+        duration: 1000,
+        delay: 200,
+        easing: 'ease-in-out'
+    });
+
+    // Initialize FullCalendar
+    initCalendar();
 });
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const content = document.querySelector('.content');
+    const arrow = document.getElementById('arrow');
+    sidebar.classList.toggle('hidden');
+    content.classList.toggle('expanded');
+    if (sidebar.classList.contains('hidden')) {
+        arrow.innerHTML = '&#9654;'; // Flecha hacia la derecha
+    } else {
+        arrow.innerHTML = '&#9664;'; // Flecha hacia la izquierda
+    }
+}
+
+function initCalendar() {
+    fetch('/api/clases/clases')
+        .then(response => response.json())
+        .then(data => {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                events: data,
+                eventClick: handleEventClick,
+                selectable: true,
+                select: handleDateSelect
+            });
+            calendar.render();
+        })
+        .catch(error => console.error('Error al obtener los datos:', error));
+}
+
+function initCalendar() {
+    fetch('/api/clases/clases')
+        .then(response => response.json())
+        .then(data => {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                events: data,
+                eventClick: handleEventClick,
+                selectable: true,
+                select: handleDateSelect
+            });
+            calendar.render();
+        })
+        .catch(error => console.error('Error al obtener los datos:', error));
+}
+
+function handleEventClick(info) {
+    const action = prompt("¿Qué quieres hacer con este evento? (edit/delete)", "edit");
+    if (action === "delete") {
+        if (confirm("¿Seguro que quieres eliminar este evento?")) {
+            fetch(`/api/clases/${info.event.id}`, { method: 'DELETE' })
+                .then(() => {
+                    info.event.remove();
+                    alert("Evento eliminado exitosamente");
+                })
+                .catch(err => alert("Error al eliminar el evento"));
+        }
+    } else if (action === "edit") {
+        const newTitle = prompt("Introduce un nuevo título para el evento", info.event.title);
+        const newDescription = prompt("Introduce una nueva descripción para el evento", info.event.extendedProps.description);
+        if (newTitle && newDescription) {
+            fetch(`/api/clases/${info.event.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: newTitle, description: newDescription, start: info.event.startStr })
+            })
+            .then(() => {
+                info.event.setProp('title', newTitle);
+                info.event.setExtendedProp('description', newDescription);
+                alert("Evento actualizado exitosamente");
+            })
+            .catch(err => alert("Error al actualizar el evento"));
+        }
+    }
+}
+
+function handleDateSelect(info) {
+    const title = prompt('Introduce el título del evento:');
+    const description = prompt('Introduce la descripción del evento:');
+    if (title && description) {
+        fetch('/api/clases', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, start: info.startStr, description })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const calendar = info.view.calendar;
+            calendar.addEvent({
+                id: data.clase._id,
+                title: data.clase.title,
+                start: data.clase.start,
+                description: data.clase.description
+            });
+            alert("Evento creado exitosamente");
+        })
+        .catch(err => alert("Error al crear el evento"));
+    }
+    info.view.calendar.unselect();
+}
 
 function loadPosadas() {
     fetch('/posadas')
@@ -243,4 +359,11 @@ function loadVentasChart() {
             });
         })
         .catch(error => console.error('Error al cargar datos de ventas:', error));
+}
+
+function logout() {
+    // Eliminar el historial
+    window.history.pushState(null, null, '/login/index.html');
+    window.history.pushState(null, null, '/login/index.html');
+    window.history.go(1);
 }

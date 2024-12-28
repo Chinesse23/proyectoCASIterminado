@@ -9,6 +9,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="icon" href="/assets/posada-favicon.ico" type="image/x-icon">
 </head>
 <body>
     <header>
@@ -122,18 +123,18 @@
             
             <label for="classes">Clases de interés (máximo 3):</label>
             <ul>
-                <li><input type="checkbox" id="clase1" name="classes" value="clase1" onclick="limitCheckboxes()"> Clase de Surf</li>
-                <li><input type="checkbox" id="clase2" name="classes" value="clase2" onclick="limitCheckboxes()"> Clase de Cocina</li>
-                <li><input type="checkbox" id="clase3" name="classes" value="clase3" onclick="limitCheckboxes()"> Clase de Buceo</li>
-                <li><input type="checkbox" id="clase4" name="classes" value="clase4" onclick="limitCheckboxes()"> Clase de Danza</li>
-                <li><input type="checkbox" id="clase5" name="classes" value="clase5" onclick="limitCheckboxes()"> Otras</li>
+                <li><input type="checkbox" id="clase1" name="classes" value="Clase de Surf" onclick="limitCheckboxes()"> Clase de Surf</li>
+                <li><input type="checkbox" id="clase2" name="classes" value="Taller de Cocina" onclick="limitCheckboxes()"> Taller de Cocina</li>
+                <li><input type="checkbox" id="clase3" name="classes" value="Clase de Buceo" onclick="limitCheckboxes()"> Clase de Buceo</li>
+                <li><input type="checkbox" id="clase4" name="classes" value="Clase de Danza" onclick="limitCheckboxes()"> Clase de Danza</li>
+                <li><input type="checkbox" id="clase5" name="classes" value="Otras" onclick="limitCheckboxes()"> Otras</li>
             </ul>
             
             <button type="submit">Enviar</button>
         </form>
-
         <div id="feedback" class="feedback"></div>
     </section>
+    
 
 
     <section class="gallery">

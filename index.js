@@ -16,6 +16,7 @@ const actividadRouter = require('./controllers/actividadController');
 const contactoController = require('./controllers/contactoController');
 const registroRouter = require('./controllers/registroController');
 const transactionRouter = require('./controllers/transactionController');
+const claseController = require('./controllers/claseController');
 
 const initializeData = require('./initData');
 
@@ -55,6 +56,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/login', express.static(path.join(__dirname, 'views/login')));
 app.use('/registro', express.static(path.join(__dirname, 'views/registro')));
 app.use('/registro-admin', express.static(path.join(__dirname, 'views/registro-admin')));
+app.use('/recuperar-password', express.static(path.join(__dirname, 'views/recuperar-password')));
 app.get('/admin', (req, res) => {
   auth(req, res, async () => {
     res.sendFile(path.join(__dirname, 'views/admin/index.html'));
@@ -106,6 +108,7 @@ app.use('/actividades', actividadRouter);
 app.use('/api/contacto', contactoController);
 app.use('/api/registrar', registroRouter); // Solo una configuración para la ruta
 app.use('/api/transaccion', transactionRouter);
+app.use('/api/clases', claseController);
 
 app.post('/api/auth/login', verifyRecaptchaToken, (req, res) => {
   const recaptchaScore = req.recaptchaScore;
